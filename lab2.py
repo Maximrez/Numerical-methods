@@ -3,8 +3,6 @@ from sympy import *
 from matplotlib import pyplot as plt
 import random
 
-var('x f d_f d2_f')
-
 '''
 
 Вариант 25
@@ -77,6 +75,7 @@ def make_first_derivative(n, show=False):
     points = np.linspace(A, B, n)
     h = (B - A) / (n - 1)
 
+    var('x f d_f d2_f')
     f = sin(x) / (2 + log(1 + x ** 2))
     d_f = simplify(diff(f, x))
 
