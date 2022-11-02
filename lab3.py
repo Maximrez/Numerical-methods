@@ -65,17 +65,16 @@ step = (B - A) / (n - 1)
 
 print("step: {:.3f}\ntarget: {:.10f}\nrectangles: {:.10f}\ntrapezoids: {:.10f}\nsimpson: {:.10f}".format(step, TARGET_VALUE, count_rectangles(n), count_trapezoids(n), count_simpson(n)))
 
+rectangles_errors = list()
+trapezoids_errors = list()
+simpson_errors = list()
 
-# rectangles_errors = list()
-# trapezoids_errors = list()
-# simpson_errors = list()
-#
-# steps = np.logspace(-3, -1, 20)
-# for h in steps:
-#     n = int((B - A) / h + 1)
-#     rectangles_errors.append(abs(count_rectangles(n) - TARGET_VALUE))
-#     trapezoids_errors.append(abs(count_trapezoids(n) - TARGET_VALUE))
-#     simpson_errors.append(abs(count_simpson(n) - TARGET_VALUE))
+steps = np.logspace(-3, -1, 20)
+for h in steps:
+    n = int((B - A) / h + 1)
+    rectangles_errors.append(abs(count_rectangles(n) - TARGET_VALUE))
+    trapezoids_errors.append(abs(count_trapezoids(n) - TARGET_VALUE))
+    simpson_errors.append(abs(count_simpson(n) - TARGET_VALUE))
 
 
 def calc_tan(x, y, num=20):
@@ -90,19 +89,19 @@ def calc_tan(x, y, num=20):
     return tan / num
 
 
-# plt.rcParams["figure.figsize"] = (10, 8)
-# plt.rcParams['font.size'] = '12'
-#
-# plt.loglog(steps, rectangles_errors, label='rectangles ({:.2f})'.format(calc_tan(steps, rectangles_errors)), linewidth=3)
-# plt.loglog(steps, trapezoids_errors, label='trapezoids ({:.2f})'.format(calc_tan(steps, trapezoids_errors)), linewidth=3)
-# plt.loglog(steps, simpson_errors, label='simpson ({:.2f})'.format(calc_tan(steps, simpson_errors)), linewidth=3)
-#
-# plt.xlabel('log(h)')
-# plt.ylabel('log|error|')
-# plt.title('Зависимость логарифма ошибки от логарифма шага')
-# plt.legend(loc='lower right')
-# plt.grid()
-# plt.show()
+plt.rcParams["figure.figsize"] = (10, 8)
+plt.rcParams['font.size'] = '12'
+
+plt.loglog(steps, rectangles_errors, label='rectangles ({:.2f})'.format(calc_tan(steps, rectangles_errors)), linewidth=3)
+plt.loglog(steps, trapezoids_errors, label='trapezoids ({:.2f})'.format(calc_tan(steps, trapezoids_errors)), linewidth=3)
+plt.loglog(steps, simpson_errors, label='simpson ({:.2f})'.format(calc_tan(steps, simpson_errors)), linewidth=3)
+
+plt.xlabel('log(h)')
+plt.ylabel('log|error|')
+plt.title('Зависимость логарифма ошибки от логарифма шага')
+plt.legend(loc='lower right')
+plt.grid()
+plt.show()
 
 target_accuracy = 1e-06
 print("\nПоиск шага интегрирования с заданной точностью:", target_accuracy)
