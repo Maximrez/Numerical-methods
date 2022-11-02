@@ -1,4 +1,4 @@
-from numpy import linspace, array, append
+from numpy import linspace
 import math
 from matplotlib import pyplot as plt
 from sympy import *
