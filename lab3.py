@@ -107,28 +107,19 @@ target_accuracy = 1e-06
 print("\nПоиск шага интегрирования с заданной точностью:", target_accuracy)
 
 n = 50
-rectangles_error = abs(count_rectangles(n) - TARGET_VALUE)
-while rectangles_error > target_accuracy:
-    n += 10
-    rectangles_error = abs(count_rectangles(n) - TARGET_VALUE)
-
-step = (B - A) / (n - 1)
-print("Прямоугольники: кол-во точек - {0}, шаг - {1:.5f}, ошибка - {2}".format(n, step, rectangles_error))
-
-n = 50
 trapezoids_error = abs(count_trapezoids(n) - TARGET_VALUE)
 while trapezoids_error > target_accuracy:
     n += 10
     trapezoids_error = abs(count_trapezoids(n) - TARGET_VALUE)
 
 step = (B - A) / (n - 1)
-print("Трапеции: кол-во точек - {0}, шаг - {1:.5f}, ошибка - {2}".format(n, step, rectangles_error))
+print("Трапеции: кол-во точек - {0}, шаг - {1:.5f}, ошибка - {2}".format(n, step, trapezoids_error))
 
-n = 10
+n = 5
 simpson_error = abs(count_simpson(n) - TARGET_VALUE)
 while simpson_error > target_accuracy:
-    n += 10
+    n += 5
     simpson_error = abs(count_simpson(n) - TARGET_VALUE)
 
 step = (B - A) / (n - 1)
-print("Симпсон: кол-во точек - {0}, шаг - {1:.5f}, ошибка - {2}".format(n, step, rectangles_error))
+print("Симпсон: кол-во точек - {0}, шаг - {1:.5f}, ошибка - {2}".format(n, step, simpson_error))
