@@ -11,9 +11,6 @@ u(0) = 1
 u'(0) = 3/2
 u0(x) = sqrt(1 + th2x) + 1/2 * sinx
 
-'''
-
-'''
 Решение:
 
 Сделаем замену w = u', решим систему ОДУ 1-го порядка:
@@ -97,10 +94,10 @@ def Adams_3(x_values, u_values, w_values):
 euler_u_values = Euler(x_values)
 runge_kutta_u_values, runge_kutta_u1_values = Runge_Kutta_4(x_values)
 adams_u_values = Adams_3(x_values, runge_kutta_u_values[:3], runge_kutta_u1_values[:3])
-# print(true_u_values)
-# print(euler_u_values)
-# print(runge_kutta_u_values)
-# print(adams_u_values)
+print(true_u_values)
+print(euler_u_values)
+print(runge_kutta_u_values)
+print(adams_u_values)
 
 plt.rcParams["figure.figsize"] = (10, 8)
 plt.rcParams['font.size'] = '12'

@@ -67,7 +67,6 @@ def progonka(a, b, c, f):
     a_values.append(0)
     b_values.append((f[-1] - a[-1] * b_values[-1]) / (b[-1] + a[-1] * a_values[-2]))
 
-    # обратный ход
     y = [0] * len(a)
     y[-1] = b_values[-1]
     for i in range(len(a) - 2, -1, -1):
@@ -124,9 +123,9 @@ def difference_approach_2(x_values):
 
 d1_u_values = difference_approach_1(x_values)
 d2_u_values = difference_approach_2(x_values)
-# print(true_u_values)
-# print(d1_u_values)
-# print(d2_u_values)
+print(true_u_values)
+print(d1_u_values)
+print(d2_u_values)
 
 plt.rcParams["figure.figsize"] = (10, 8)
 plt.rcParams['font.size'] = '12'
