@@ -26,6 +26,10 @@ def phi4(x, x0=1.5, eps=0.5):
     return phi1(x, x0, eps) * math.pow(math.cos(math.pi * abs(x - x0) / 2 / eps), 3)
 
 
+def special_phi(x, x0=1.5, l=10, eps=0.5):
+    return phi4(x, x0, eps) + phi4(x, l - x0, eps)
+
+
 def exact(phi, mu, n, T, c=0.7, l=10, a=1):
     h = l / (n - 1)
     N = int(T / (c * h / a))
@@ -42,6 +46,28 @@ def exact(phi, mu, n, T, c=0.7, l=10, a=1):
                 exact_matrix[i][j] = phi(grid[j] - a * t)
 
     return exact_matrix
+
+
+# def _exact(phi, mu, n, T, c=0.7, l=10, a):
+#     h = l / (n - 1)
+#     grid = [h * i for i in range(n)]
+#     tau = c * h / max(a(x, l) for x in grid)
+#     N = int(T / tau)
+#     exact_matrix = np.zeros((N, n), dtype=float)
+#     exact_matrix[0] = np.array(list(phi(x, 1.5, l, 0.5) for x in grid))
+#
+#     sum_t = 0
+#     for i in range(1, N):
+#         sum_t += tau
+#         for j in range(n):
+#             cur_a = a(grid[j], l)
+#             t = i * c * h / cur_a
+#             if grid[j] < cur_a * t:
+#                 exact_matrix[i][j] = mu(t - grid[j] / cur_a)
+#             else:
+#                 exact_matrix[i][j] = phi(grid[j] - cur_a * t, 1.5, l, 0.5)
+#
+#     return exact_matrix
 
 
 def angle(phi, mu, n, T, c=0.7, l=10, a=1):
@@ -94,6 +120,24 @@ def LAX_WN(phi, mu, n, T, c=0.7, l=10, a=1):
     return grid, mx
 
 
+def special_LAX_WN(phi, mu, n, T, a: callable, c=0.7, l=10):
+    h = l / (n - 1)
+    grid = [h * i for i in range(n)]
+    tau = c * h / max(a(x, l) for x in grid)
+    N = int(T / tau)
+    mx = np.zeros((N, n), dtype=float)
+
+    mx[0] = np.array(list(map(phi, grid)))
+    for i in range(1, N):
+        mx[i][0] = mu(c * h * i / a(grid[0]))
+        for j in range(1, n - 1):
+            c = tau * a(grid[j]) / h
+            # print(round(c, 10), end=' ')
+            mx[i][j] = c ** 2 / 2 * (mx[i - 1][j + 1] - 2 * mx[i - 1][j] + mx[i - 1][j - 1]) + mx[i - 1][j] - c * (mx[i - 1][j + 1] - mx[i - 1][j - 1]) / 2
+        # print()
+    return grid, mx
+
+
 def vanLeer_limiter(r):
     return (r + abs(r)) / (1 + abs(r)) / 2
 
@@ -132,3 +176,19 @@ def LAXTVD(phi, mu, n, T, c=0.7, l=10, a=1):
             mx[i][j] = mx[i - 1][j] - c * (F[j] - F[j - 1])
 
     return grid, mx
+
+
+def a_func0(x, l=10):
+    return 1
+
+
+def a_func1(x, l=10):
+    return np.arctan(l / 2 - x)
+
+
+def a_func2(x, l=10):
+    if x < l / 2:
+        return 1
+    elif x > l / 2:
+        return -1
+    return 0

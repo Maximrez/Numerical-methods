@@ -6,7 +6,6 @@ from functions import *
 if __name__ == "__main__":
     n_points, c, T, l, a = 400, 0.5, 2.5, 10, 1
     k = 5
-    T = min(T, (l - 1.5) / a)
     # print(int(T * a * (n_points - 1) / (c * l)))
 
     phis = [phi1, phi2, phi3, phi4]
