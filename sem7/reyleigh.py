@@ -1,6 +1,10 @@
 import numpy as np
 import scipy.sparse.linalg as ssl
 import matplotlib.pyplot as plt
+import warnings
+from scipy.sparse import SparseEfficiencyWarning
+
+warnings.filterwarnings("ignore", category=SparseEfficiencyWarning)
 
 
 def U(x):
@@ -44,7 +48,7 @@ def rayleigh(A, epsilon, mu, b):
 b = np.reshape(np.ones(N - 1), (N - 1, 1))
 b[N // 2:] *= -1
 result = rayleigh(A, 1e-7, 0, b)
-print(result[0])
+print(*result[0])
 
 x = np.linspace(0, 1, N + 1, endpoint=True)
 y = np.reshape(result[1], (1, N - 1)).flatten()

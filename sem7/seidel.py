@@ -22,10 +22,10 @@ def errors(x0: np.ndarray, result: np.ndarray):
 
 
 def iter_seidel(A: np.ndarray, b: np.ndarray, result: np.ndarray):
-    betterresult = np.copy(result)
+    result_ = np.copy(result)
     for i in range(n):
-        betterresult[i][0] = (b[i][0] - np.sum(np.dot(A[i], betterresult)) + A[i][i] * result[i][0]) / A[i][i]
-    return betterresult
+        result_[i][0] = (b[i][0] - np.sum(np.dot(A[i], result_)) + A[i][i] * result[i][0]) / A[i][i]
+    return result_
 
 
 # delta = 1e-14
@@ -41,7 +41,7 @@ def solve_seidel(A: np.ndarray, b: np.ndarray, error: int, delta=1e-14):
 print(solve_seidel(A2, b2, 1))
 
 cur = 10
-count = 15
+count = 10
 step = 1.5
 
 x = np.zeros(count)
@@ -74,5 +74,5 @@ plt.grid()
 plt.title('Time')
 plt.xlabel('Matrix size')
 plt.ylabel('Time, ms')
-plt.legend(['maxmodSeidel', 'deltagSeidel', 'delta0Seidel'])
+plt.legend(['maxmod', 'delta_result', 'delta_x0'])
 plt.show()
